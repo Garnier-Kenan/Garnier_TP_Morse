@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -28,12 +29,14 @@ String rexex = "[A-Za-z0-9]+( [A-Za-z0-9]+)*";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.saisie.textProperty().addListener((observable, oldValue, newValue) ->
+        this.saisie.setOnKeyPressed(event ->
         {
-            try {
-                controller();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            if (event.getCode() == KeyCode.ENTER) {
+                try {
+                    controller();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }

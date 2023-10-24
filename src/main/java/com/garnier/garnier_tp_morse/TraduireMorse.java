@@ -3,7 +3,6 @@ package com.garnier.garnier_tp_morse;
 import javafx.application.Platform;
 
 public class TraduireMorse {
-    private ControllerMorse controllerMorse;
     private static  final char[] alphabet =
             {
                     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
@@ -17,41 +16,47 @@ public class TraduireMorse {
                     "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", ".----",
                     "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----"
             };
+    private ControllerMorse controllerMorse;
     public TraduireMorse(ControllerMorse controllerMorse) {
         this.controllerMorse = controllerMorse;
     }
     public void traduire (String texte) throws InterruptedException {
         // Ici "/" corespond à une barre-morte et "\" corespond à un point-mort
+        System.out.println(texte);
 
         texte.toLowerCase();
         texte = texte.replace("","/");
         texte = texte.replace(" ","\\");
         texte = texte.substring(1,texte.length()-1);
+
         System.out.println(texte);
 
         char [] chars = texte.toCharArray();
         int length = chars.length;
         String morsetemp;
-        String out = "";
+        texte = "";
 
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < alphabet.length; j++) {
              if (chars[i] == alphabet[j]) {
                  morsetemp = morse[j].replace("","\\");
                  morsetemp = morsetemp.substring(1,morsetemp.length()-1);
-                 out = out + morsetemp;
+                 texte = texte + morsetemp;
              }
             }
             if (chars[i] == '/'){
-            out = out + chars[i];
+            texte = texte + chars[i];
             }
             else if (chars[i] == '\\') {
-            out = out + chars[i];
+            texte = texte + chars[i];
+            }
         }
-        }
-        System.out.println(out);
+
+        System.out.println(texte);
+
         String  [] message;
-        message = out.split("");
+        message = texte.split("");
+
         Thread led = new Thread(() -> {
             try {
                 controllerMorse.morse(message);
