@@ -19,15 +19,17 @@ public class ControllerMorse implements Initializable {
 @FXML
 private TextField saisie;
 @FXML
-private Button traduire;
+private Label sortie;
 @FXML
 private Circle led;
 private TraduireMorse traduireMorse = new TraduireMorse(this);
 int point = 500;
+String rexex = "[A-Za-z0-9]+( [A-Za-z0-9]+)*";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.traduire.setOnAction(event -> {
+        this.saisie.textProperty().addListener((observable, oldValue, newValue) ->
+        {
             try {
                 controller();
             } catch (InterruptedException e) {
@@ -37,9 +39,16 @@ int point = 500;
     }
     private void controller() throws InterruptedException {
         if (saisie.getText().length()>0) {
-            traduireMorse.traduire(saisie.getText());
+            if (saisie.getText().matches(rexex)) {
+                traduireMorse.traduire(saisie.getText());
+                sortie.setText("Traduction en cours");
+            }else {
+                System.err.println("Format invalide");
+                sortie.setText("Format invalide");
+            }
         }else{
             System.err.println("Aucun texte saisie");
+            sortie.setText("Aucun texte saisie");
         }
     }
     public void morse(String[] message) throws InterruptedException {

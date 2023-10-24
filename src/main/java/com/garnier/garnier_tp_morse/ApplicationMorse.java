@@ -10,9 +10,12 @@ public class ApplicationMorse extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMorse.class.getResource("viewMorse.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 197, 244);
+        stage.setWidth(200);
+        stage.setHeight(244);
         stage.setTitle("MorseDecode");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
         stage.setOnCloseRequest(event -> System.exit(0));
     }
