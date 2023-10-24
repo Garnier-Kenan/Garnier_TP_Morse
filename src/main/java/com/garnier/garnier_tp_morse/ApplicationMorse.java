@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class ApplicationMorse extends Application {
@@ -16,9 +15,7 @@ public class ApplicationMorse extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(event -> System.exit(0));
-
     }
-
     public static void main(String[] args) {
         launch();
     }
