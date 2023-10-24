@@ -1,5 +1,7 @@
 package com.garnier.garnier_tp_morse;
 
+import javafx.application.Platform;
+
 public class TraduireMorse {
     private ControllerMorse controllerMorse;
     private static  final char[] alphabet =
@@ -18,7 +20,7 @@ public class TraduireMorse {
     public TraduireMorse(ControllerMorse controllerMorse) {
         this.controllerMorse = controllerMorse;
     }
-    public void traduire (String texte){
+    public void traduire (String texte) throws InterruptedException {
         // Ici "/" corespond à une barre-morte et "\" corespond à un point-mort
 
         texte.toLowerCase();
@@ -48,6 +50,15 @@ public class TraduireMorse {
         }
         }
         System.out.println(out);
-
+        String  [] message;
+        message = out.split("");
+        Thread led = new Thread(() -> {
+            try {
+                controllerMorse.morse(message);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        led.start();
     }
 }

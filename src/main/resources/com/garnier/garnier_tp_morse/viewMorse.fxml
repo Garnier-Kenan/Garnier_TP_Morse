@@ -16,7 +16,7 @@
          <children>
             <TextField fx:id="saisie" layoutX="11.0" layoutY="23.0" />
             <Button fx:id="traduire" layoutX="52.0" layoutY="74.0" mnemonicParsing="false" text="Traduire" />
-            <Circle fx:id="led" fill="DODGERBLUE" layoutX="82.0" layoutY="169.0" radius="47.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="led" fill="BLACK" layoutX="82.0" layoutY="169.0" radius="47.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </AnchorPane>
    </children>
