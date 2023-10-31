@@ -14,7 +14,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -37,6 +36,7 @@ String rexex = "[A-Za-z0-9]+( [A-Za-z0-9]+)*";
         this.sortie.setStyle("-fx-background-color: black");
         this.stop.setStyle("-fx-background-color: red");
         this.stop.setOnAction(event -> stop());
+        this.saisie.setOnMouseClicked(event -> this.saisie.selectAll());
         this.saisie.setOnKeyPressed(event ->
         {
             if (event.getCode() == KeyCode.ENTER) {
@@ -56,6 +56,7 @@ String rexex = "[A-Za-z0-9]+( [A-Za-z0-9]+)*";
                 onoff.stop();
             }
         }
+        led.setFill(Color.RED);
         onoff = new Thread(() ->
         {
             while (true)
@@ -80,12 +81,13 @@ String rexex = "[A-Za-z0-9]+( [A-Za-z0-9]+)*";
         if (onoff != null){
             if  (onoff.isAlive()){
                 onoff.stop();
+                led.setFill(Color.BLACK);
             }
         }
         if (saisie.getText().length()>0) {
             if (saisie.getText().matches(rexex)) {
                 traduireMorse.traduire(saisie.getText());
-                System.out.printf("Traduction en cours\"");
+                System.out.println("Traduction en cours");
                 sortie.setTextFill(Color.GREEN);
                 sortie.setText("Traduction en cours");
             }else {
