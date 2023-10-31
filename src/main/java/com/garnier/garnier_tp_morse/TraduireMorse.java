@@ -16,11 +16,19 @@ public class TraduireMorse {
                     "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", ".----",
                     "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----"
             };
+    private Thread led;
     private ControllerMorse controllerMorse;
     public TraduireMorse(ControllerMorse controllerMorse) {
         this.controllerMorse = controllerMorse;
     }
     public void traduire (String texte) throws InterruptedException {
+        // pensser a tuer le thread sinon deux message peuvent s'executer ene même temps. C'est mieux que de bloque l'interface le temps que le précédent message ce traduise. là au moin l'utilisateur peut interompre une traduction qu'il éstime mauvaise.
+        // mais avant de tuer le thread vaudrait mieux qu'il existe et qu'il tourne
+        if (led != null){
+            if  (led.isAlive()){
+                led.stop();
+            }
+        }
         // Ici "/" corespond à une barre-morte et "\" corespond à un point-mort
         System.out.println(texte);
 
@@ -57,7 +65,7 @@ public class TraduireMorse {
         String  [] message;
         message = texte.split("");
 
-        Thread led = new Thread(() -> {
+        led = new Thread(() -> {
             try {
                 controllerMorse.morse(message);
             } catch (InterruptedException e) {
@@ -65,5 +73,12 @@ public class TraduireMorse {
             }
         });
         led.start();
+    }
+    public void stop (){
+        if (led != null){
+            if  (led.isAlive()){
+                led.stop();
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,11 +15,13 @@
    <children>
       <AnchorPane prefHeight="244.0" prefWidth="168.0">
          <children>
-            <TextField fx:id="saisie" alignment="CENTER" layoutX="14.0" layoutY="40.0" prefHeight="25.0" prefWidth="136.0" />
-            <Circle fx:id="led" fill="BLACK" layoutX="82.0" layoutY="145.0" radius="47.0" stroke="BLACK" strokeType="INSIDE" />
-            <Label alignment="CENTER" layoutX="8.0" layoutY="6.0" prefHeight="17.0" prefWidth="149.0" text="Entrer une phrase a traduire" />
-            <Label contentDisplay="CENTER" layoutX="14.0" layoutY="23.0" prefHeight="17.0" prefWidth="136.0" text="Format a-a ou A-Z ou 0-9" />
-            <Label fx:id="sortie" alignment="CENTER" layoutX="14.0" layoutY="73.0" prefHeight="17.0" prefWidth="136.0" />
+            <TextField fx:id="saisie" alignment="CENTER" layoutX="15.0" layoutY="61.0" prefHeight="25.0" prefWidth="136.0" />
+            <Circle fx:id="led" fill="BLACK" layoutX="79.0" layoutY="158.0" radius="47.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="6.0" prefHeight="17.0" prefWidth="149.0" text="Entrer une phrase a traduire" />
+            <Label contentDisplay="CENTER" layoutX="14.0" layoutY="23.0" prefHeight="17.0" prefWidth="136.0" text="Format a-z ou A-Z ou 0-9" />
+            <Label fx:id="sortie" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="86.0" prefHeight="17.0" prefWidth="136.0" textFill="RED" />
+            <Button fx:id="stop" alignment="CENTER" contentDisplay="CENTER" layoutX="31.0" layoutY="218.0" mnemonicParsing="false" text="Stop Taduction" textFill="WHITE" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="40.0" text="Presser Entrer pour traduire" />
          </children>
       </AnchorPane>
    </children>

@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -23,12 +25,18 @@ private TextField saisie;
 private Label sortie;
 @FXML
 private Circle led;
+@FXML
+private Button stop;
 private TraduireMorse traduireMorse = new TraduireMorse(this);
+private Thread onoff;
 int point = 500;
 String rexex = "[A-Za-z0-9]+( [A-Za-z0-9]+)*";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.sortie.setStyle("-fx-background-color: black");
+        this.stop.setStyle("-fx-background-color: red");
+        this.stop.setOnAction(event -> stop());
         this.saisie.setOnKeyPressed(event ->
         {
             if (event.getCode() == KeyCode.ENTER) {
@@ -40,17 +48,54 @@ String rexex = "[A-Za-z0-9]+( [A-Za-z0-9]+)*";
             }
         });
     }
+    private void stop(){
+        traduireMorse.stop();
+        sortie.setTextFill(Color.YELLOW);
+        if (onoff != null){
+            if  (onoff.isAlive()){
+                onoff.stop();
+            }
+        }
+        onoff = new Thread(() ->
+        {
+            while (true)
+            {
+                Platform.runLater(() -> sortie.setText("Traduction stopée"));
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                Platform.runLater(() -> sortie.setText(""));
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        onoff.start();
+    }
     private void controller() throws InterruptedException {
+        if (onoff != null){
+            if  (onoff.isAlive()){
+                onoff.stop();
+            }
+        }
         if (saisie.getText().length()>0) {
             if (saisie.getText().matches(rexex)) {
                 traduireMorse.traduire(saisie.getText());
+                System.out.printf("Traduction en cours\"");
+                sortie.setTextFill(Color.GREEN);
                 sortie.setText("Traduction en cours");
             }else {
                 System.err.println("Format invalide");
+                sortie.setTextFill(Color.RED);
                 sortie.setText("Format invalide");
             }
         }else{
             System.err.println("Aucun texte saisie");
+            sortie.setTextFill(Color.RED);
             sortie.setText("Aucun texte saisie");
         }
     }
